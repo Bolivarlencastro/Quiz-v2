@@ -1,4 +1,5 @@
 
+
 <app-creation-wizard 
   title="Criar Trilha"
   [steps]="steps"
@@ -18,18 +19,18 @@
       <div class="space-y-6">
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome da Trilha *</label>
-          <input type="text" id="name" maxlength="200" [ngModel]="trail().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+          <input type="text" id="name" maxlength="200" [ngModel]="trail().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
           <p class="text-right text-xs text-gray-500 dark:text-gray-400 mt-1">{{ trail().name.length }}/200</p>
         </div>
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição *</label>
-          <textarea id="description" rows="4" maxlength="250" [ngModel]="trail().description" (ngModelChange)="updateField('description', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200"></textarea>
+          <textarea id="description" rows="4" maxlength="250" [ngModel]="trail().description" (ngModelChange)="updateField('description', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200"></textarea>
           <p class="text-right text-xs text-gray-500 dark:text-gray-400 mt-1">{{ trail().description.length }}/250</p>
         </div>
         <div class="grid grid-cols-2 gap-6">
             <div>
                 <label for="trailType" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipo de Trilha *</label>
-                <select id="trailType" [ngModel]="trail().trailType" (ngModelChange)="updateField('trailType', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+                <select id="trailType" [ngModel]="trail().trailType" (ngModelChange)="updateField('trailType', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
                   <option>Técnico</option>
                   <option>Comportamental</option>
                   <option>Liderança</option>
@@ -37,7 +38,7 @@
             </div>
             <div>
                 <label for="language" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Idioma *</label>
-                <select id="language" [ngModel]="trail().language" (ngModelChange)="updateField('language', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+                <select id="language" [ngModel]="trail().language" (ngModelChange)="updateField('language', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
                   <option value="pt-BR">Português (BR)</option>
                   <option value="en-US">Inglês (US)</option>
                 </select>
@@ -118,7 +119,7 @@
             </div>
              <div>
                 <label for="expirationDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Data de Expiração (Opcional)</label>
-                <input type="date" id="expirationDate" [ngModel]="trail().expirationDate" (ngModelChange)="updateField('expirationDate', $event)" class="mt-1 block w-full max-w-sm px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+                <input type="date" id="expirationDate" [ngModel]="trail().expirationDate" (ngModelChange)="updateField('expirationDate', $event)" class="mt-1 block w-full max-w-sm px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
             </div>
           </div>
         }

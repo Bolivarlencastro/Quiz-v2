@@ -27,7 +27,7 @@
           <div class="space-y-6">
             <div>
               <label for="quiz-title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título do Quiz *</label>
-              <input type="text" id="quiz-title" [ngModel]="quiz().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+              <input type="text" id="quiz-title" [ngModel]="quiz().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm">
             </div>
 
             <div class="border-t dark:border-gray-700 pt-6">
@@ -101,7 +101,7 @@
                                 @for (alt of formQuestion.alternatives; track $index) {
                                   <div class="flex items-center gap-3">
                                     <input type="radio" [name]="formQuestion.id" [checked]="formQuestion.correctAnswerIndex === $index" (change)="setCorrectAlternative($index)" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500 shrink-0">
-                                    <input type="text" [value]="alt" (input)="updateAlternativeText($index, $event)" placeholder="Alternativa {{ $index + 1 }}" class="flex-1 p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500">
+                                    <input type="text" [value]="alt" (input)="updateAlternativeText($index, $event)" placeholder="Alternativa {{ $index + 1 }}" class="flex-1 p-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500">
                                     <button (click)="removeAlternative($index)" [disabled]="formQuestion.alternatives.length <= 2" class="p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 disabled:text-gray-400 dark:disabled:text-gray-600 disabled:cursor-not-allowed">
                                       <span class="material-symbols-outlined text-base">delete</span>
                                     </button>
@@ -202,7 +202,7 @@
                               @for (alt of formQuestion.alternatives; track $index) {
                                 <div class="flex items-center gap-3">
                                   <input type="radio" [name]="formQuestion.id" [checked]="formQuestion.correctAnswerIndex === $index" (change)="setCorrectAlternative($index)" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500 shrink-0">
-                                  <input type="text" [value]="alt" (input)="updateAlternativeText($index, $event)" placeholder="Alternativa {{ $index + 1 }}" class="flex-1 p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500">
+                                  <input type="text" [value]="alt" (input)="updateAlternativeText($index, $event)" placeholder="Alternativa {{ $index + 1 }}" class="flex-1 p-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500">
                                   <button (click)="removeAlternative($index)" [disabled]="formQuestion.alternatives.length <= 2" class="p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500 disabled:text-gray-400 dark:disabled:text-gray-600 disabled:cursor-not-allowed">
                                     <span class="material-symbols-outlined text-base">delete</span>
                                   </button>
@@ -250,7 +250,7 @@
                     <span tabindex="0" class="material-symbols-outlined text-base text-gray-400 cursor-help focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded" [appTooltip]="'Defina um número de perguntas a serem sorteadas do total. Ex: Se o quiz tem 20 e você define \'10\', o usuário receberá 10 perguntas sorteadas. Deixe em branco para usar todas.'">info</span>
                   </label>
                   <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Selecione o número de questões a serem sorteadas do total de {{ (quiz().questions ?? []).length }} disponíveis. Deixe em branco para exibir todas.</p>
-                  <input id="questionsToDisplay" type="number" min="1" [max]="(quiz().questions ?? []).length" placeholder="Todas" [ngModel]="config.questionsToDisplay" (ngModelChange)="updateConfigField('questionsToDisplay', +$event || null)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md">
+                  <input id="questionsToDisplay" type="number" min="1" [max]="(quiz().questions ?? []).length" placeholder="Todas" [ngModel]="config.questionsToDisplay" (ngModelChange)="updateConfigField('questionsToDisplay', +$event || null)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
                 </div>
                 }
               </div>
@@ -279,14 +279,14 @@
                     <span>Número de Tentativas do Quiz</span>
                     <span tabindex="0" class="material-symbols-outlined text-base text-gray-400 cursor-help focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded" [appTooltip]="'O número máximo de vezes que um usuário pode refazer o quiz completo. Use \'1\' para uma tentativa única.'">info</span>
                   </label>
-                  <input type="number" min="0" [ngModel]="config.retakeAttempts" (ngModelChange)="updateConfigField('retakeAttempts', +$event)" class="mt-1 block w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600">
+                  <input type="number" min="0" [ngModel]="config.retakeAttempts" (ngModelChange)="updateConfigField('retakeAttempts', +$event)" class="mt-1 block w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
                 </div>
                 <div>
                   <label class="block text-sm font-medium flex items-center gap-1.5">
                     <span>Tempo Máximo (min)</span>
                     <span tabindex="0" class="material-symbols-outlined text-base text-gray-400 cursor-help focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded" [appTooltip]="'Define um tempo limite em minutos para a conclusão do quiz. Deixe em branco ou \'0\' para não haver limite de tempo.'">info</span>
                   </label>
-                  <input type="number" min="0" [ngModel]="config.maxTimeMinutes" (ngModelChange)="updateConfigField('maxTimeMinutes', +$event)" placeholder="Sem limite" class="mt-1 block w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600">
+                  <input type="number" min="0" [ngModel]="config.maxTimeMinutes" (ngModelChange)="updateConfigField('maxTimeMinutes', +$event)" placeholder="Sem limite" class="mt-1 block w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
                 </div>
               </div>
             </div>

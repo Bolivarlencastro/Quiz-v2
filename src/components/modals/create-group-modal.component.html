@@ -8,7 +8,7 @@
     </div>
     <div>
       <label for="groupName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome do Grupo *</label>
-      <input type="text" id="groupName" [(ngModel)]="newGroupName" maxlength="50" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+      <input type="text" id="groupName" [(ngModel)]="newGroupName" maxlength="50" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
       @if(nameError(); as error) {
         <p class="text-red-500 text-sm mt-1">{{ error }}</p>
       }

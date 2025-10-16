@@ -17,17 +17,17 @@
       <div class="space-y-6 max-w-4xl">
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome do Canal *</label>
-          <input type="text" id="name" maxlength="200" [ngModel]="channel().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+          <input type="text" id="name" maxlength="200" [ngModel]="channel().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
            <p class="text-right text-xs text-gray-500 dark:text-gray-400 mt-1">{{ channel().name.length }}/200</p>
         </div>
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição *</label>
-          <textarea id="description" rows="4" [ngModel]="channel().description" (ngModelChange)="updateField('description', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200"></textarea>
+          <textarea id="description" rows="4" [ngModel]="channel().description" (ngModelChange)="updateField('description', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200"></textarea>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoria *</label>
-            <select id="category" [ngModel]="channel().category" (ngModelChange)="updateField('category', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+            <select id="category" [ngModel]="channel().category" (ngModelChange)="updateField('category', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
               <option>Geral</option>
               <option>Desenvolvimento Pessoal</option>
               <option>Notícias da Empresa</option>
@@ -36,7 +36,7 @@
           </div>
           <div>
             <label for="channelType" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipo de Canal *</label>
-            <select id="channelType" [ngModel]="channel().channelType" (ngModelChange)="updateField('channelType', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+            <select id="channelType" [ngModel]="channel().channelType" (ngModelChange)="updateField('channelType', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
               <option>Educação</option>
               <option>Notícias</option>
               <option>Dicas</option>
@@ -44,7 +44,7 @@
           </div>
           <div>
             <label for="language" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Idioma *</label>
-            <select id="language" [ngModel]="channel().language" (ngModelChange)="updateField('language', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+            <select id="language" [ngModel]="channel().language" (ngModelChange)="updateField('language', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
               <option value="pt-BR">Português (BR)</option>
               <option value="en-US">Inglês (US)</option>
             </select>

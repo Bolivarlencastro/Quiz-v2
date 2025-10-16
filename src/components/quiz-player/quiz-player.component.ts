@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input, output, signal, computed, Pipe, PipeTransform, inject, SecurityContext } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, signal, computed, Pipe, PipeTransform, inject, SecurityContext, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Pulse, QuizQuestion } from '../../types';
@@ -33,6 +33,8 @@ export class QuizPlayerComponent {
 
   quizCompleted = output<void>();
   exitPreview = output<void>(); // This is still used by the wizard preview
+  progressUpdate = output<number>();
+  progressTextUpdate = output<string>();
 
   questions = computed(() => this.quizData().questions ?? []);
   answers = signal<Answer[]>([]);
@@ -55,6 +57,8 @@ export class QuizPlayerComponent {
   progress = computed(() => {
     const total = this.questions().length;
     if (total === 0) return 0;
+    if (this.quizState() === 'finished') return 100;
+    
     // Progress is based on confirmed answers for immediate feedback mode, or current index otherwise
     if (this.quizData().config?.showImmediateFeedback) {
         return (this.answers().length / total) * 100;
@@ -64,6 +68,19 @@ export class QuizPlayerComponent {
   
   score = signal(0);
   correctAnswers = signal(0);
+
+  constructor() {
+    effect(() => {
+      this.progressUpdate.emit(this.progress());
+
+      const total = this.questions().length;
+      if (this.quizState() === 'playing' && total > 0) {
+        this.progressTextUpdate.emit(`${this.currentQuestionIndex() + 1} / ${total}`);
+      } else {
+        this.progressTextUpdate.emit('');
+      }
+    });
+  }
 
   startQuiz(): void {
     this.currentQuestionIndex.set(0);
@@ -106,11 +123,8 @@ export class QuizPlayerComponent {
   }
 
   next(): void {
-    if (this.isInlinePlayer()) {
-      this.quizCompleted.emit();
-    } else {
-      this.exitPreview.emit();
-    }
+    // This is only called from the button that appears when !isInlinePlayer()
+    this.exitPreview.emit();
   }
 
   finishQuiz(): void {
@@ -119,6 +133,10 @@ export class QuizPlayerComponent {
     const totalQuestions = this.questions().length;
     this.score.set(totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0);
     this.quizState.set('finished');
+
+    if (this.isInlinePlayer()) {
+      this.quizCompleted.emit();
+    }
   }
   
   private resetQuestionState(): void {

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, inject, ElementRef, viewChild, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject, ElementRef, viewChild, computed, effect } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 
 import { CourseWizardComponent } from './components/course-wizard/course-wizard.component';
@@ -81,6 +81,8 @@ export class AppComponent {
   shouldOpenGroupCreateModal = signal<boolean>(false);
 
   courseCarousel = viewChild<ElementRef<HTMLDivElement>>('courseCarousel');
+  
+  theme = signal<'light' | 'dark'>('light');
 
   tabs = [
     { id: 'destaques' as ActiveTab, name: 'Destaques', icon: 'star' },
@@ -100,6 +102,23 @@ export class AppComponent {
     this.document.addEventListener('fullscreenchange', () => {
         this.isFullScreen.set(!!this.document.fullscreenElement);
     });
+    
+    // Initialize theme based on system preference
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.theme.set(prefersDark ? 'dark' : 'light');
+
+    // Effect to apply theme class to the document root
+    effect(() => {
+      if (this.theme() === 'dark') {
+        this.document.documentElement.classList.add('dark');
+      } else {
+        this.document.documentElement.classList.remove('dark');
+      }
+    });
+  }
+  
+  toggleTheme(): void {
+    this.theme.update(current => (current === 'light' ? 'dark' : 'light'));
   }
 
   setActiveTab(tabId: ActiveTab): void {

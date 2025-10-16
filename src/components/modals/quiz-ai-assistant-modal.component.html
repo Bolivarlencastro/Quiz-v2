@@ -1,4 +1,5 @@
 
+
 <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 animate-fade-in" (click)="close.emit()">
   <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl p-8 m-4 animate-scale-up relative overflow-hidden" (click)="$event.stopPropagation()">
     <div class="flex items-center mb-6">
@@ -45,11 +46,11 @@
       <div class="grid grid-cols-2 gap-4">
         <div>
             <label for="num-questions" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Quantidade de questões</label>
-            <input id="num-questions" type="number" min="1" max="20" [(ngModel)]="numberOfQuestions" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+            <input id="num-questions" type="number" min="1" max="20" [(ngModel)]="numberOfQuestions" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm">
         </div>
         <div>
             <label for="num-answers" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Respostas por questão</label>
-            <input id="num-answers" type="number" min="2" max="6" [(ngModel)]="answersPerQuestion" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+            <input id="num-answers" type="number" min="2" max="6" [(ngModel)]="answersPerQuestion" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm">
         </div>
       </div>
 
@@ -58,7 +59,7 @@
             <label for="quiz-topic" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 <span>Sobre qual tópico você quer gerar um quiz?</span>
             </label>
-            <input type="text" id="quiz-topic" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm" [(ngModel)]="quizTopic" placeholder="Ex: Fundamentos da metodologia ágil Scrum">
+            <input type="text" id="quiz-topic" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm" [(ngModel)]="quizTopic" placeholder="Ex: Fundamentos da metodologia ágil Scrum">
         </div>
       }
     </div>

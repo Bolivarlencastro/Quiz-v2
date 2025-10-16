@@ -10,7 +10,7 @@
     <div class="space-y-6">
       <div>
         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome do Pulse *</label>
-        <input type="text" id="name" [ngModel]="pulse().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
+        <input type="text" id="name" [ngModel]="pulse().name" (ngModelChange)="updateField('name', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-gray-200">
       </div>
 
       @switch (pulse().type) {
@@ -33,20 +33,20 @@
         @case ('link') {
           <div>
             <label for="linkUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL do Link *</label>
-            <input type="url" id="linkUrl" [ngModel]="pulse().linkUrl" (ngModelChange)="updateField('linkUrl', $event)" placeholder="https://..." class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm">
+            <input type="url" id="linkUrl" [ngModel]="pulse().linkUrl" (ngModelChange)="updateField('linkUrl', $event)" placeholder="https://..." class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm">
           </div>
         }
         @case ('text') {
           <div>
              <label for="textContent" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Texto *</label>
-             <textarea id="textContent" rows="8" [ngModel]="pulse().textContent" (ngModelChange)="updateField('textContent', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm"></textarea>
+             <textarea id="textContent" rows="8" [ngModel]="pulse().textContent" (ngModelChange)="updateField('textContent', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm"></textarea>
           </div>
         }
       }
 
       <div>
         <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição</label>
-        <textarea id="description" rows="3" [ngModel]="pulse().description" (ngModelChange)="updateField('description', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm"></textarea>
+        <textarea id="description" rows="3" [ngModel]="pulse().description" (ngModelChange)="updateField('description', $event)" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm"></textarea>
       </div>
 
     </div>

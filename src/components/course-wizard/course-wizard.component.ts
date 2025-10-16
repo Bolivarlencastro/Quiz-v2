@@ -10,6 +10,7 @@ import { EMPTY_PULSE } from '../../mock-data';
 import { QuizPlayerComponent } from '../quiz-player/quiz-player.component';
 import { ImageUploadModalComponent } from '../modals/image-upload-modal.component';
 import { ImageCropperModalComponent } from '../modals/image-cropper-modal.component';
+import { GoogleGenAI, GenerateContentResponse, Type } from '@google/genai';
 
 @Component({
   selector: 'app-course-wizard',
@@ -74,6 +75,7 @@ export class CourseWizardComponent {
   targetTopicIdForQuiz = signal<string | null>(null);
   editingContentIdForQuiz = signal<string | null>(null);
   contentForAiQuiz = signal<ContentItem[]>([]);
+  quickQuizLoadingTopicId = signal<string | null>(null);
 
   // --- Quiz Preview State ---
   quizToPreview = signal<Pulse | null>(null);
@@ -114,6 +116,12 @@ export class CourseWizardComponent {
       this.bannerPreview.set(initialData.bannerUrl);
       this.cardPreview.set(initialData.cardUrl);
       this.currentStep.set(this.startAtStep());
+
+      // Initially expand all topics when the wizard loads
+      if (deepCopiedData.topics) {
+        const allTopicIds = new Set(deepCopiedData.topics.map((topic: Topic) => topic.id));
+        this.expandedTopics.set(allTopicIds);
+      }
     });
 
     effect(() => {
@@ -490,6 +498,117 @@ export class CourseWizardComponent {
         this.editingContentIdForQuiz.set(contentId);
         this.quizForContent.set(JSON.parse(JSON.stringify(content.quizData)));
         this.quizCreationState.set('editor');
+    }
+  }
+
+  isQuickQuizDisabled(topic: Topic): boolean {
+    const hasContentForQuiz = topic.contents.some(c => c.type !== 'quiz');
+    const hasExistingQuiz = topic.contents.some(c => c.type === 'quiz');
+    return !hasContentForQuiz || hasExistingQuiz || !!this.quickQuizLoadingTopicId();
+  }
+
+  async generateQuickQuiz(topic: Topic): Promise<void> {
+    const contentsForQuiz = topic.contents.filter(c => c.type !== 'quiz');
+    if (contentsForQuiz.length === 0 || this.quickQuizLoadingTopicId()) return;
+
+    this.quickQuizLoadingTopicId.set(topic.id);
+    
+    const contentTitles = contentsForQuiz.map(c => c.title).join(', ');
+    const prompt = `Gere um quiz com 5 perguntas de múltipla escolha com 4 alternativas cada sobre o tópico "${topic.title}". O conteúdo de referência inclui: ${contentTitles}. As perguntas devem ser relevantes para esses conteúdos. Apenas uma alternativa deve ser a correta. Retorne o resultado em um formato JSON que corresponda ao schema fornecido.`;
+    
+    try {
+        if (!process.env.API_KEY) {
+            throw new Error("API_KEY environment variable not set.");
+        }
+        const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
+
+        const responseSchema = {
+            type: Type.OBJECT,
+            properties: {
+                questions: {
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            questionText: { 
+                                type: Type.STRING,
+                                description: "O enunciado da pergunta."
+                            },
+                            alternatives: { 
+                                type: Type.ARRAY, 
+                                items: { type: Type.STRING },
+                                description: "Uma lista de 4 possíveis respostas."
+                            },
+                            correctAnswerIndex: { 
+                                type: Type.INTEGER,
+                                description: "O índice (base 0) da alternativa correta."
+                            }
+                        },
+                        required: ["questionText", "alternatives", "correctAnswerIndex"]
+                    }
+                }
+            },
+            required: ["questions"]
+        };
+        
+        const response: GenerateContentResponse = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: responseSchema,
+            },
+        });
+        
+        let jsonStr = response.text.trim();
+        if (jsonStr.startsWith('```json')) {
+            jsonStr = jsonStr.substring(7, jsonStr.length - 3).trim();
+        }
+        const quizJson = JSON.parse(jsonStr);
+        
+        if (!quizJson.questions || !Array.isArray(quizJson.questions)) {
+            throw new Error("Formato de resposta da IA inválido.");
+        }
+        
+        const newQuizData: Pulse = {
+            ...JSON.parse(JSON.stringify(EMPTY_PULSE)),
+            type: 'quiz',
+            name: `Quiz sobre: ${topic.title}`,
+            description: `Este quiz foi gerado por IA sobre o conteúdo do tópico.`,
+            questions: quizJson.questions.map((q: any) => ({
+                id: `q_${Date.now()}_${Math.random().toString(36).substring(2)}`,
+                questionText: q.questionText,
+                alternatives: q.alternatives,
+                correctAnswerIndex: q.correctAnswerIndex,
+                imageUrl: null,
+                imagePosition: 'before',
+                isInBank: false,
+            }))
+        };
+        
+        const newContent: ContentItem = {
+            id: `content_${Date.now()}`,
+            type: 'quiz',
+            title: newQuizData.name,
+            description: newQuizData.description,
+            source: `quiz_internal_${Date.now()}`,
+            quizData: newQuizData,
+        };
+
+        this.course.update(c => {
+            const newTopics = c.topics.map(t => {
+                if (t.id === topic.id) {
+                    return { ...t, contents: [...t.contents, newContent] };
+                }
+                return t;
+            });
+            return { ...c, topics: newTopics };
+        });
+
+    } catch (error) {
+        console.error('Error generating quick quiz:', error);
+    } finally {
+        this.quickQuizLoadingTopicId.set(null);
     }
   }
 
